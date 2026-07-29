@@ -1,0 +1,11 @@
+export const EVENT_STATUS = {
+  SCHEDULED: "SCHEDULED",
+  FULL: "FULL",
+  CANCELLED: "CANCELLED",
+  COMPLETED: "COMPLETED",
+} as const;
+
+export const REGISTRATION_TYPE = {
+  CANDIDATE: "CANDIDATE",
+  EMPLOYER: "EMPLOYER",
+} as const;

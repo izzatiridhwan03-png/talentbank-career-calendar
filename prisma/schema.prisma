@@ -8,43 +8,58 @@ datasource db {
 }
 
 model Event {
-  id            String         @id @default(uuid())
+  id            String   @id @default(uuid())
   title         String
-  company       String
   description   String?
   location      String
-  imageUrl      String?
-
+  venue         String   
   // Allowed values:
   // "ONLINE"
   // "PHYSICAL"
-  mode          String
 
   startDateTime DateTime
   endDateTime   DateTime
 
-  capacity      Int
+  employerCapacity   Int
 
   // Allowed values:
-  // "SCHEDULED"
-  // "FULL"
-  // "CANCELLED"
-  status        String         @default("SCHEDULED")
+  //SCHEDULED  -> Open for registration
+  //CANCELLED  -> Event cancelled
+  //COMPLETED  -> Event has ended
+  status        String   @default("SCHEDULED")
 
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
-  registrations Registration[]
+  candidateRegistrations CandidateRegistration[]
+  employerRegistrations  EmployerRegistration[]
 }
 
-model Registration {
+model CandidateRegistration {
   id           String   @id @default(uuid())
   eventId      String
+
   name         String
   email        String
+
   registeredAt DateTime @default(now())
 
-  event        Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
-  
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@unique([eventId, email])
+}
+
+model EmployerRegistration {
+  id            String   @id @default(uuid())
+  eventId       String
+
+  companyName   String
+  contactPerson String
+  email         String
+
+  registeredAt  DateTime @default(now())
+
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
   @@unique([eventId, email])
 }
