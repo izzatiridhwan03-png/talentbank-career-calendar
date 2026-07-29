@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Event {
+  id            String         @id @default(uuid())
+  title         String
+  company       String
+  description   String?
+  location      String
+  imageUrl      String?
+
+  // Allowed values:
+  // "ONLINE"
+  // "PHYSICAL"
+  mode          String
+
+  startDateTime DateTime
+  endDateTime   DateTime
+
+  capacity      Int
+
+  // Allowed values:
+  // "SCHEDULED"
+  // "FULL"
+  // "CANCELLED"
+  status        String         @default("SCHEDULED")
+
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  registrations Registration[]
+}
+
+model Registration {
+  id           String   @id @default(uuid())
+  eventId      String
+  name         String
+  email        String
+  registeredAt DateTime @default(now())
+
+  event        Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  
+  @@unique([eventId, email])
+}
