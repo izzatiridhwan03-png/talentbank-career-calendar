@@ -4,13 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma db push --accept-data-loss --schema=./prisma/schema.prisma && next build",
     "postinstall": "prisma generate --schema=./prisma/schema.prisma",
     "start": "next start",
     "lint": "next lint",
     "prisma": "prisma",
     "prisma:generate": "prisma generate --schema=./prisma/schema.prisma",
-    "prisma:migrate": "prisma migrate dev --name init --schema=./prisma/schema.prisma"
+    "prisma:push": "prisma db push --schema=./prisma/schema.prisma"
   },
   "dependencies": {
     "@fullcalendar/daygrid": "^6.1.21",

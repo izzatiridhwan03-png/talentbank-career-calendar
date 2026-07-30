@@ -4,4 +4,8 @@ node_modules
 
 *.log
 
+prisma/dev.db
+prisma/*.db
+prisma/*.db-journal
+
 *.tsbuildinfo
