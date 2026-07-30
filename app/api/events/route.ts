@@ -6,11 +6,15 @@ import { getEventDisplayStatus, validateEventPayload, buildOverlapFilter } from 
 export async function GET() {
   const events = await prisma.event.findMany({
     orderBy: { startDateTime: "asc" },
+    include: { _count: { select: { employerRegistrations: true } } },
   });
 
-  const response = events.map((event) => ({
+  const response = events.map(({ _count, ...event }) => ({
     ...event,
-    displayStatus: getEventDisplayStatus(event),
+    displayStatus: getEventDisplayStatus({
+      ...event,
+      employerRegistrationCount: _count.employerRegistrations,
+    }),
   }));
 
   return NextResponse.json(response);

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "../../../../lib/prisma";
-import { validateEmployerRegistrationPayload } from "../../../../lib/event-api";
+import { validateEmployerRegistrationPayload, isEventCompleted } from "../../../../lib/event-api";
 import { EVENT_STATUS } from "../../../../lib/constants";
 
 export async function POST(request: Request) {
@@ -22,17 +22,25 @@ export async function POST(request: Request) {
     return NextResponse.json({ message: "Event not found." }, { status: 404 });
   }
 
-  if (
-    event.status !== EVENT_STATUS.SCHEDULED &&
-    event.status !== EVENT_STATUS.FULL
-  ) {
+  if (event.status === EVENT_STATUS.CANCELLED) {
     return NextResponse.json(
-      { message: "Registration is only allowed for active scheduled events." },
+      { message: "Registration is not allowed because this event has been cancelled." },
       { status: 409 }
     );
   }
 
-  if (event.status === EVENT_STATUS.FULL) {
+  if (isEventCompleted(event.endDateTime)) {
+    return NextResponse.json(
+      { message: "Registration is closed because the event has already completed." },
+      { status: 409 }
+    );
+  }
+
+  const currentEmployerCount = await prisma.employerRegistration.count({
+    where: { eventId },
+  });
+
+  if (currentEmployerCount >= event.employerCapacity) {
     return NextResponse.json(
       { message: "Employer registration capacity has been reached for this event." },
       { status: 400 }

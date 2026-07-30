@@ -59,12 +59,28 @@ export function isEventCompleted(endDateTime: Date | string) {
   return new Date() > new Date(endDateTime);
 }
 
-export function getEventDisplayStatus(event: { status: string; endDateTime: Date }) {
+export function getEventDisplayStatus(event: {
+  status: string;
+  endDateTime: Date | string;
+  employerCapacity?: number;
+  employerRegistrations?: Array<unknown>;
+  employerRegistrationCount?: number;
+}) {
   if (event.status === EVENT_STATUS.CANCELLED) {
     return EVENT_STATUS.CANCELLED;
   }
 
-  return isEventCompleted(event.endDateTime) ? "COMPLETED" : event.status;
+  if (isEventCompleted(event.endDateTime)) {
+    return EVENT_STATUS.COMPLETED;
+  }
+
+  if (event.employerCapacity !== undefined) {
+    const employerCount =
+      event.employerRegistrationCount ?? event.employerRegistrations?.length ?? 0;
+    return employerCount >= event.employerCapacity ? EVENT_STATUS.FULL : EVENT_STATUS.SCHEDULED;
+  }
+
+  return event.status;
 }
 
 function validatePlainString(value: unknown, fieldName: string) {

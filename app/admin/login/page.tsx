@@ -38,35 +38,35 @@ export default function AdminLoginPage() {
   };
 
   if (loading) {
-    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+    return <div className="min-h-screen flex items-center justify-center bg-brand-cream text-brand-brown">Loading...</div>;
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
-        <h1 className="text-2xl font-semibold mb-4">Admin Login</h1>
+    <div className="min-h-screen bg-brand-cream flex items-center justify-center p-4">
+      <div className="w-full max-w-md bg-white rounded-xl border border-brand-sage/60 p-6 shadow-sm">
+        <h1 className="font-heading text-2xl font-semibold mb-4 text-brand-brown">Admin Login</h1>
         <form onSubmit={handleSubmit}>
           <label className="block mb-3">
-            <span className="text-sm font-medium text-slate-700">Username</span>
+            <span className="text-sm font-medium text-brand-brown/80">Username</span>
             <input
               value={username}
               onChange={(event) => setUsername(event.target.value)}
-              className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-500 focus:outline-none"
+              className="mt-1 block w-full rounded-md border border-brand-sage px-3 py-2 text-brand-brown focus:border-brand-brown focus:outline-none"
             />
           </label>
           <label className="block mb-4">
-            <span className="text-sm font-medium text-slate-700">Password</span>
+            <span className="text-sm font-medium text-brand-brown/80">Password</span>
             <div className="relative mt-1">
               <input
                 type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
-                className="block w-full rounded-md border border-slate-300 px-3 py-2 pr-10 focus:border-slate-500 focus:outline-none"
+                className="block w-full rounded-md border border-brand-sage px-3 py-2 pr-10 text-brand-brown focus:border-brand-brown focus:outline-none"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword((current) => !current)}
-                className="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-500"
+                className="absolute inset-y-0 right-0 flex items-center pr-3 text-brand-brown/60"
                 aria-label={showPassword ? "Hide password" : "Show password"}
               >
                 {showPassword ? (
@@ -87,7 +87,7 @@ export default function AdminLoginPage() {
           {error ? <p className="text-sm text-red-600 mb-4">{error}</p> : null}
           <button
             type="submit"
-            className="w-full rounded-md bg-slate-900 text-white py-2 font-semibold hover:bg-slate-800"
+            className="w-full rounded-md bg-brand-brown text-brand-cream py-2 font-semibold hover:bg-brand-browndark"
           >
             Sign in
           </button>

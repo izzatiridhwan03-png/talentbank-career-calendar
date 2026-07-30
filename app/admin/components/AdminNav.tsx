@@ -13,12 +13,13 @@ export default function AdminNav() {
   };
 
   return (
-    <nav className="flex flex-wrap items-center justify-between gap-3 bg-white border-b border-slate-200 px-4 py-3">
+    <nav className="flex flex-wrap items-center justify-between gap-3 bg-white border-b border-brand-sage/60 px-4 py-3">
       <div className="flex flex-wrap items-center gap-3">
+        <span className="font-script text-2xl text-brand-brown">Talentbank</span>
         <button
           type="button"
           onClick={() => router.push("/admin/dashboard")}
-          className="text-sm font-semibold text-slate-900 hover:text-slate-700"
+          className="text-sm font-semibold text-brand-brown hover:text-brand-brown/70"
         >
           Dashboard
         </button>
@@ -26,7 +27,7 @@ export default function AdminNav() {
       <button
         type="button"
         onClick={handleLogout}
-        className="rounded-md bg-slate-900 px-3 py-2 text-sm font-semibold text-white hover:bg-slate-800"
+        className="rounded-md bg-brand-brown px-3 py-2 text-sm font-semibold text-brand-cream hover:bg-brand-browndark"
       >
         Logout
       </button>

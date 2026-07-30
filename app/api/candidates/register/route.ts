@@ -28,9 +28,9 @@ export async function POST(request: Request) {
     );
   }
 
-  if (event.status !== EVENT_STATUS.SCHEDULED) {
+  if (event.status !== EVENT_STATUS.SCHEDULED && event.status !== EVENT_STATUS.FULL) {
     return NextResponse.json(
-      { message: "Registration is only allowed for scheduled events." },
+      { message: "Registration is only allowed for active scheduled events." },
       { status: 409 }
     );
   }

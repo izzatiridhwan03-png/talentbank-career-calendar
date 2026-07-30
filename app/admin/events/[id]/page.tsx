@@ -130,25 +130,24 @@ export default function AdminEventDetailPage() {
       .finally(() => setLoading(false));
   }, [eventId]);
 
-  if (loading) return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+  if (loading) return <div className="min-h-screen flex items-center justify-center bg-brand-cream text-brand-brown">Loading...</div>;
   if (error)
     return (
-      <div className="min-h-screen p-6">
+      <div className="min-h-screen bg-brand-cream p-6">
         <AdminNav />
         <div className="mt-8 rounded-xl border border-red-200 bg-red-50 p-6 text-red-900">{error}</div>
       </div>
     );
   if (!event)
     return (
-      <div className="min-h-screen p-6">
+      <div className="min-h-screen bg-brand-cream p-6">
         <AdminNav />
-        <div className="mt-8 rounded-xl border border-slate-200 bg-white p-6 text-slate-900">Event not found.</div>
+        <div className="mt-8 rounded-xl border border-brand-sage/60 bg-white p-6 text-brand-brown">Event not found.</div>
       </div>
     );
 
   const candidateCount = candidates.length;
   const employerCount = employers.length;
-  const remainingCapacity = event.employerCapacity - employerCount;
   const displayStatus = event.displayStatus ?? event.status;
 
   const handleEditSave = async (e: FormEvent<HTMLFormElement>) => {
@@ -205,18 +204,18 @@ export default function AdminEventDetailPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-brand-cream">
       <AdminNav />
       <main className="mx-auto max-w-7xl px-4 py-6">
         <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h1 className="text-3xl font-semibold text-slate-900">{event.title}</h1>
+            <h1 className="font-heading text-3xl font-semibold text-brand-brown">{event.title}</h1>
           </div>
           <div className="flex flex-wrap items-center gap-3">
             <button
               type="button"
               onClick={() => window.location.assign("/admin/dashboard")}
-              className="rounded-md bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800"
+              className="rounded-md bg-brand-brown px-4 py-2 text-sm font-semibold text-brand-cream hover:bg-brand-browndark"
             >
               Back to dashboard
             </button>
@@ -238,7 +237,7 @@ export default function AdminEventDetailPage() {
                   setEditError(null);
                   setShowEditModal(true);
                 }}
-                className="rounded-md bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800"
+                className="rounded-md bg-brand-brown px-4 py-2 text-sm font-semibold text-brand-cream hover:bg-brand-browndark"
               >
                 Edit Event
               </button>
@@ -247,85 +246,85 @@ export default function AdminEventDetailPage() {
         </div>
 
         <div className="grid gap-6 lg:grid-cols-2">
-          <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 className="text-xl font-semibold text-slate-900">Event Information</h2>
-            <div className="mt-4 space-y-3 text-sm text-slate-700">
+          <section className="rounded-xl border border-brand-sage/60 bg-white p-6 shadow-sm">
+            <h2 className="font-heading text-xl font-semibold text-brand-brown">Event Information</h2>
+            <div className="mt-4 space-y-3 text-sm text-brand-brown/80">
               <div>
-                <p className="font-semibold text-slate-900">Description</p>
+                <p className="font-semibold text-brand-brown">Description</p>
                 <p>{event.description || "No description provided."}</p>
               </div>
               <div>
-                <p className="font-semibold text-slate-900">Venue, Location</p>
+                <p className="font-semibold text-brand-brown">Venue, Location</p>
                 <p>
                   {event.venue}
                   {event.location ? `, ${event.location}` : ""}
                 </p>
               </div>
               <div>
-                <p className="font-semibold text-slate-900">Start Date</p>
+                <p className="font-semibold text-brand-brown">Start Date</p>
                 <p>{formatMalaysiaDateTime(event.startDateTime)}</p>
               </div>
               <div>
-                <p className="font-semibold text-slate-900">End Date</p>
+                <p className="font-semibold text-brand-brown">End Date</p>
                 <p>{formatMalaysiaDateTime(event.endDateTime)}</p>
               </div>
               <div>
-                <p className="font-semibold text-slate-900">Status</p>
+                <p className="font-semibold text-brand-brown">Status</p>
                 <p>{event.displayStatus ?? event.status}</p>
               </div>
             </div>
           </section>
 
-          <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 className="text-xl font-semibold text-slate-900">Registration Summary</h2>
-            <div className="mt-4 space-y-3 text-sm text-slate-700">
+          <section className="rounded-xl border border-brand-sage/60 bg-white p-6 shadow-sm">
+            <h2 className="font-heading text-xl font-semibold text-brand-brown">Registration Summary</h2>
+            <div className="mt-4 space-y-3 text-sm text-brand-brown/80">
               <div>
-                <p className="font-semibold text-slate-900">Capacity</p>
+                <p className="font-semibold text-brand-brown">Capacity</p>
                 <p>
-                  {remainingCapacity}/{event.employerCapacity}
+                  {employerCount}/{event.employerCapacity}
                 </p>
               </div>
               <div>
-                <p className="font-semibold text-slate-900">Total Candidates</p>
+                <p className="font-semibold text-brand-brown">Total Candidates</p>
                 <p>{candidateCount}</p>
               </div>
               <div>
-                <p className="font-semibold text-slate-900">Total Employers</p>
+                <p className="font-semibold text-brand-brown">Total Employers</p>
                 <p>{employerCount}</p>
               </div>
             </div>
           </section>
         </div>
 
-        <section className="mt-6 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-          <h2 className="text-xl font-semibold text-slate-900">Candidate Registrations</h2>
+        <section className="mt-6 rounded-xl border border-brand-sage/60 bg-white p-6 shadow-sm">
+          <h2 className="font-heading text-xl font-semibold text-brand-brown">Candidate Registrations</h2>
           <div className="mt-4 overflow-x-auto">
-            <table className="min-w-full divide-y divide-slate-200">
-              <thead className="bg-slate-50">
+            <table className="min-w-full divide-y divide-brand-sage/60">
+              <thead className="bg-brand-cream">
                 <tr>
                   {['Name', 'Email', 'Registered Date'].map((heading) => (
                     <th
                       key={heading}
-                      className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500"
+                      className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-brand-brown/60"
                     >
                       {heading}
                     </th>
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-200">
+              <tbody className="divide-y divide-brand-sage/60">
                 {candidates.length === 0 ? (
                   <tr>
-                    <td colSpan={3} className="px-4 py-4 text-sm text-slate-600">
+                    <td colSpan={3} className="px-4 py-4 text-sm text-brand-brown/70">
                       No candidate registrations.
                     </td>
                   </tr>
                 ) : (
                   candidates.map((candidate) => (
-                    <tr key={candidate.id} className="hover:bg-slate-50">
-                      <td className="px-4 py-3 text-sm text-slate-900">{candidate.name || "-"}</td>
-                      <td className="px-4 py-3 text-sm text-slate-700">{candidate.email || "-"}</td>
-                      <td className="px-4 py-3 text-sm text-slate-700">{formatMalaysiaDateTime(candidate.registeredAt)}</td>
+                    <tr key={candidate.id} className="hover:bg-brand-cream">
+                      <td className="px-4 py-3 text-sm text-brand-brown">{candidate.name || "-"}</td>
+                      <td className="px-4 py-3 text-sm text-brand-brown/80">{candidate.email || "-"}</td>
+                      <td className="px-4 py-3 text-sm text-brand-brown/80">{formatMalaysiaDateTime(candidate.registeredAt)}</td>
                     </tr>
                   ))
                 )}
@@ -334,36 +333,36 @@ export default function AdminEventDetailPage() {
           </div>
         </section>
 
-        <section className="mt-6 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-          <h2 className="text-xl font-semibold text-slate-900">Employer Registrations</h2>
+        <section className="mt-6 rounded-xl border border-brand-sage/60 bg-white p-6 shadow-sm">
+          <h2 className="font-heading text-xl font-semibold text-brand-brown">Employer Registrations</h2>
           <div className="mt-4 overflow-x-auto">
-            <table className="min-w-full divide-y divide-slate-200">
-              <thead className="bg-slate-50">
+            <table className="min-w-full divide-y divide-brand-sage/60">
+              <thead className="bg-brand-cream">
                 <tr>
                   {['Company', 'Representative', 'Email', 'Registered Date'].map((heading) => (
                     <th
                       key={heading}
-                      className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500"
+                      className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-brand-brown/60"
                     >
                       {heading}
                     </th>
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-200">
+              <tbody className="divide-y divide-brand-sage/60">
                 {employers.length === 0 ? (
                   <tr>
-                    <td colSpan={4} className="px-4 py-4 text-sm text-slate-600">
+                    <td colSpan={4} className="px-4 py-4 text-sm text-brand-brown/70">
                       No employer registrations.
                     </td>
                   </tr>
                 ) : (
                   employers.map((employer) => (
-                    <tr key={employer.id} className="hover:bg-slate-50">
-                      <td className="px-4 py-3 text-sm text-slate-900">{employer.companyName || "-"}</td>
-                      <td className="px-4 py-3 text-sm text-slate-700">{employer.contactPerson || "-"}</td>
-                      <td className="px-4 py-3 text-sm text-slate-700">{employer.email || "-"}</td>
-                      <td className="px-4 py-3 text-sm text-slate-700">{formatMalaysiaDateTime(employer.registeredAt)}</td>
+                    <tr key={employer.id} className="hover:bg-brand-cream">
+                      <td className="px-4 py-3 text-sm text-brand-brown">{employer.companyName || "-"}</td>
+                      <td className="px-4 py-3 text-sm text-brand-brown/80">{employer.contactPerson || "-"}</td>
+                      <td className="px-4 py-3 text-sm text-brand-brown/80">{employer.email || "-"}</td>
+                      <td className="px-4 py-3 text-sm text-brand-brown/80">{formatMalaysiaDateTime(employer.registeredAt)}</td>
                     </tr>
                   ))
                 )}
@@ -374,17 +373,17 @@ export default function AdminEventDetailPage() {
       </main>
 
       {showEditModal ? (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 px-4 py-6">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-brand-brown/50 px-4 py-6">
           <div className="w-full max-w-3xl overflow-y-auto rounded-2xl bg-white p-6 shadow-xl">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-2xl font-semibold text-slate-900">Edit Event</h2>
-                <p className="text-sm text-slate-600">Update event details and submit to save.</p>
+                <h2 className="font-heading text-2xl font-semibold text-brand-brown">Edit Event</h2>
+                <p className="text-sm text-brand-brown/70">Update event details and submit to save.</p>
               </div>
               <button
                 type="button"
                 onClick={() => setShowEditModal(false)}
-                className="rounded-md border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-900 hover:bg-slate-50"
+                className="rounded-md border border-brand-sage bg-white px-3 py-2 text-sm font-medium text-brand-brown hover:bg-brand-cream"
               >
                 Close
               </button>
@@ -393,78 +392,78 @@ export default function AdminEventDetailPage() {
             <form className="mt-6 space-y-4" onSubmit={handleEditSave}>
               <div className="grid gap-4 sm:grid-cols-2">
                 <label className="block">
-                  <span className="text-sm font-medium text-slate-700">Title</span>
+                  <span className="text-sm font-medium text-brand-brown/80">Title</span>
                   <input
                     value={editForm.title}
                     onChange={(ev) => setEditForm((current) => ({ ...current, title: ev.target.value }))}
-                    className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-500 focus:outline-none"
+                    className="mt-1 block w-full rounded-md border border-brand-sage px-3 py-2 text-brand-brown focus:border-brand-brown focus:outline-none"
                   />
                 </label>
                 <label className="block">
-                  <span className="text-sm font-medium text-slate-700">Venue</span>
+                  <span className="text-sm font-medium text-brand-brown/80">Venue</span>
                   <input
                     value={editForm.venue}
                     onChange={(ev) => setEditForm((current) => ({ ...current, venue: ev.target.value }))}
-                    className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-500 focus:outline-none"
+                    className="mt-1 block w-full rounded-md border border-brand-sage px-3 py-2 text-brand-brown focus:border-brand-brown focus:outline-none"
                   />
                 </label>
                 <label className="block">
-                  <span className="text-sm font-medium text-slate-700">Location</span>
+                  <span className="text-sm font-medium text-brand-brown/80">Location</span>
                   <input
                     value={editForm.location}
                     onChange={(ev) => setEditForm((current) => ({ ...current, location: ev.target.value }))}
-                    className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-500 focus:outline-none"
+                    className="mt-1 block w-full rounded-md border border-brand-sage px-3 py-2 text-brand-brown focus:border-brand-brown focus:outline-none"
                   />
                 </label>
               </div>
 
               <label className="block">
-                <span className="text-sm font-medium text-slate-700">Description</span>
+                <span className="text-sm font-medium text-brand-brown/80">Description</span>
                 <textarea
                   value={editForm.description}
                   onChange={(ev) => setEditForm((current) => ({ ...current, description: ev.target.value }))}
-                  className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-500 focus:outline-none"
+                  className="mt-1 block w-full rounded-md border border-brand-sage px-3 py-2 text-brand-brown focus:border-brand-brown focus:outline-none"
                   rows={4}
                 />
               </label>
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <label className="block">
-                  <span className="text-sm font-medium text-slate-700">Start Date</span>
+                  <span className="text-sm font-medium text-brand-brown/80">Start Date</span>
                   <input
                     type="datetime-local"
                     value={editForm.startDateTime}
                     onChange={(ev) => setEditForm((current) => ({ ...current, startDateTime: ev.target.value }))}
-                    className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-500 focus:outline-none"
+                    className="mt-1 block w-full rounded-md border border-brand-sage px-3 py-2 text-brand-brown focus:border-brand-brown focus:outline-none"
                   />
                 </label>
                 <label className="block">
-                  <span className="text-sm font-medium text-slate-700">End Date</span>
+                  <span className="text-sm font-medium text-brand-brown/80">End Date</span>
                   <input
                     type="datetime-local"
                     value={editForm.endDateTime}
                     onChange={(ev) => setEditForm((current) => ({ ...current, endDateTime: ev.target.value }))}
-                    className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-500 focus:outline-none"
+                    className="mt-1 block w-full rounded-md border border-brand-sage px-3 py-2 text-brand-brown focus:border-brand-brown focus:outline-none"
                   />
                 </label>
               </div>
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <label className="block">
-                  <span className="text-sm font-medium text-slate-700">Capacity</span>
+                  <span className="text-sm font-medium text-brand-brown/80">Capacity</span>
                   <input
                     type="number"
                     value={editForm.employerCapacity}
                     onChange={(ev) => setEditForm((current) => ({ ...current, employerCapacity: ev.target.value }))}
-                    className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-500 focus:outline-none"
+                    className="mt-1 block w-full rounded-md border border-brand-sage px-3 py-2 text-brand-brown focus:border-brand-brown focus:outline-none"
                   />
                 </label>
                 <label className="block">
-                  <span className="text-sm font-medium text-slate-700">Status</span>
+                  <span className="text-sm font-medium text-brand-brown/80">Status</span>
                   <select
                     value={editForm.status}
                     onChange={(ev) => setEditForm((current) => ({ ...current, status: ev.target.value }))}
-                    className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-500 focus:outline-none"
+                    className="mt-1 block w-full rounded-md border border-brand-sage px-3 py-2 text-brand-brown focus:border-brand-brown focus:outline-none"
                   >
                     {editForm.status === EVENT_STATUS.FULL ? (
                       <option value={EVENT_STATUS.FULL} disabled>
@@ -488,14 +487,14 @@ export default function AdminEventDetailPage() {
                 <button
                   type="submit"
                   disabled={saving}
-                  className="rounded-md bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60"
+                  className="rounded-md bg-brand-brown px-4 py-2 text-sm font-semibold text-brand-cream hover:bg-brand-browndark disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {saving ? "Saving..." : "Save Changes"}
                 </button>
                 <button
                   type="button"
                   onClick={() => setShowEditModal(false)}
-                  className="rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-slate-50"
+                  className="rounded-md border border-brand-sage bg-white px-4 py-2 text-sm font-semibold text-brand-brown hover:bg-brand-cream"
                 >
                   Cancel
                 </button>

@@ -456,12 +456,12 @@ export default function AdminDashboardPage() {
   };
 
   if (loading) {
-    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+    return <div className="min-h-screen flex items-center justify-center bg-brand-cream text-brand-brown">Loading...</div>;
   }
 
   if (error) {
     return (
-      <div className="min-h-screen p-6">
+      <div className="min-h-screen bg-brand-cream p-6">
         <AdminNav />
         <div className="mt-8 rounded-xl border border-red-200 bg-red-50 p-6 text-red-900">
           {error}
@@ -471,10 +471,10 @@ export default function AdminDashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-brand-cream">
       <AdminNav />
       <main className="mx-auto max-w-7xl px-4 py-6">
-        <h1 className="text-3xl font-semibold text-slate-900">Admin Dashboard</h1>
+        <h1 className="font-heading text-3xl font-semibold text-brand-brown">Admin Dashboard</h1>
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {[
             { label: "Total Events", value: stats.totalEvents },
@@ -483,16 +483,16 @@ export default function AdminDashboardPage() {
             { label: "Cancelled Events", value: stats.cancelled },
             { label: "Full Events", value: stats.full },
           ].map((card) => (
-            <div key={card.label} className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-              <p className="text-sm uppercase tracking-wide text-slate-500">{card.label}</p>
-              <p className="mt-3 text-3xl font-semibold text-slate-900">{card.value}</p>
+            <div key={card.label} className="rounded-xl border border-brand-sage/60 bg-white p-5 shadow-sm">
+              <p className="text-sm uppercase tracking-wide text-brand-brown/60">{card.label}</p>
+              <p className="mt-3 text-3xl font-semibold text-brand-brown">{card.value}</p>
             </div>
           ))}
         </div>
 
         <section className="mt-10">
           <div className="flex items-center justify-between">
-            <h2 className="text-xl font-semibold text-slate-900">Recent Events</h2>
+            <h2 className="font-heading text-xl font-semibold text-brand-brown">Recent Events</h2>
             <div>
               <button
                 type="button"
@@ -510,59 +510,59 @@ export default function AdminDashboardPage() {
                   setCreateError(null);
                   setShowCreateModal(true);
                 }}
-                className="rounded-md bg-slate-900 px-3 py-2 text-sm font-semibold text-white hover:bg-slate-800"
+                className="rounded-md bg-brand-brown px-3 py-2 text-sm font-semibold text-brand-cream hover:bg-brand-browndark"
               >
                 Add Event
               </button>
             </div>
           </div>
           {events.length === 0 ? (
-            <div className="mt-4 p-6 text-sm text-slate-600">No events available.</div>
+            <div className="mt-4 p-6 text-sm text-brand-brown/70">No events available.</div>
           ) : (
-            <div className="mt-4 overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm">
-              <table className="min-w-full divide-y divide-slate-200">
-                <thead className="bg-slate-50">
+            <div className="mt-4 overflow-x-auto rounded-xl border border-brand-sage/60 bg-white shadow-sm">
+              <table className="min-w-full divide-y divide-brand-sage/60">
+                <thead className="bg-brand-cream">
                   <tr>
                     {columns.map((column) => {
                       const key = column.key;
                       return (
                         <th
                           key={column.label}
-                          className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500"
+                          className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-brand-brown/60"
                         >
                           {key ? (
                             <button
                               type="button"
                               onClick={() => handleSortClick(key)}
-                              className="inline-flex items-center gap-1 text-left text-sm font-semibold uppercase tracking-wide text-slate-500 hover:text-slate-900"
+                              className="inline-flex items-center gap-1 text-left text-sm font-semibold uppercase tracking-wide text-brand-brown/60 hover:text-brand-brown"
                             >
                               {column.label}
                               <span className="text-[9px] leading-none opacity-70">{getSortIndicator(key)}</span>
                             </button>
                           ) : (
-                            <span className="text-sm font-semibold uppercase tracking-wide text-slate-500">{column.label}</span>
+                            <span className="text-sm font-semibold uppercase tracking-wide text-brand-brown/60">{column.label}</span>
                           )}
                         </th>
                       );
                     })}
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-200">
+                <tbody className="divide-y divide-brand-sage/60">
                   {sortedEvents.map((event) => (
-                    <tr key={event.id} className="hover:bg-slate-50">
-                      <td className="px-4 py-3 text-sm text-slate-900">{event.title}</td>
-                      <td className="px-4 py-3 text-sm text-slate-700">{event.venue}</td>
-                      <td className="px-4 py-3 text-sm text-slate-700">{formatDate(event.startDateTime)}</td>
-                      <td className="px-4 py-3 text-sm text-slate-700">{formatDate(event.endDateTime)}</td>
-                      <td className="px-4 py-3 text-sm text-slate-700">{event.displayStatus ?? event.status}</td>
-                      <td className="px-4 py-3 text-sm text-slate-700">{event.candidateCount ?? event.candidateRegistrations?.length ?? 0}</td>
-                      <td className="px-4 py-3 text-sm text-slate-700">{event.employerCount ?? event.employerRegistrations?.length ?? 0}</td>
-                      <td className="px-4 py-3 text-sm text-slate-700">{event.employerCapacity ?? "-"}</td>
-                      <td className="px-4 py-3 text-sm text-slate-700 space-x-2">
+                    <tr key={event.id} className="hover:bg-brand-cream">
+                      <td className="px-4 py-3 text-sm text-brand-brown">{event.title}</td>
+                      <td className="px-4 py-3 text-sm text-brand-brown/80">{event.venue}</td>
+                      <td className="px-4 py-3 text-sm text-brand-brown/80">{formatDate(event.startDateTime)}</td>
+                      <td className="px-4 py-3 text-sm text-brand-brown/80">{formatDate(event.endDateTime)}</td>
+                      <td className="px-4 py-3 text-sm text-brand-brown/80">{event.displayStatus ?? event.status}</td>
+                      <td className="px-4 py-3 text-sm text-brand-brown/80">{event.candidateCount ?? event.candidateRegistrations?.length ?? 0}</td>
+                      <td className="px-4 py-3 text-sm text-brand-brown/80">{event.employerCount ?? event.employerRegistrations?.length ?? 0}</td>
+                      <td className="px-4 py-3 text-sm text-brand-brown/80">{event.employerCapacity ?? "-"}</td>
+                      <td className="px-4 py-3 text-sm text-brand-brown/80 space-x-2">
                         <button
                           type="button"
                           onClick={() => window.location.assign(`/admin/events/${event.id}`)}
-                          className="rounded-md border border-slate-300 px-2 py-1 text-sm font-medium text-slate-900 hover:bg-slate-100"
+                          className="rounded-md border border-brand-sage px-2 py-1 text-sm font-medium text-brand-brown hover:bg-brand-cream"
                         >
                           View
                         </button>
@@ -570,7 +570,7 @@ export default function AdminDashboardPage() {
                           <button
                             type="button"
                             onClick={() => router.push(`/admin/dashboard?edit=${event.id}`)}
-                            className="rounded-md border border-slate-300 px-2 py-1 text-sm font-medium text-slate-900 hover:bg-slate-100"
+                            className="rounded-md border border-brand-sage px-2 py-1 text-sm font-medium text-brand-brown hover:bg-brand-cream"
                           >
                             Edit
                           </button>
@@ -585,17 +585,17 @@ export default function AdminDashboardPage() {
         </section>
       </main>
       {showCreateModal ? (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 px-4 py-6">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-brand-brown/50 px-4 py-6">
           <div className="w-full max-w-3xl overflow-y-auto rounded-2xl bg-white p-6 shadow-xl">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-2xl font-semibold text-slate-900">Add Event</h2>
-                <p className="text-sm text-slate-600">Create a new event.</p>
+                <h2 className="font-heading text-2xl font-semibold text-brand-brown">Add Event</h2>
+                <p className="text-sm text-brand-brown/70">Create a new event.</p>
               </div>
               <button
                 type="button"
                 onClick={() => setShowCreateModal(false)}
-                className="rounded-md border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-900 hover:bg-slate-50"
+                className="rounded-md border border-brand-sage bg-white px-3 py-2 text-sm font-medium text-brand-brown hover:bg-brand-cream"
               >
                 Close
               </button>
@@ -604,44 +604,44 @@ export default function AdminDashboardPage() {
             <form className="mt-6 space-y-4" onSubmit={handleCreateSave}>
               <div className="grid gap-4 sm:grid-cols-2">
                 <label className="block">
-                  <span className="text-sm font-medium text-slate-700">Title</span>
+                  <span className="text-sm font-medium text-brand-brown/80">Title</span>
                   <input
                     value={createForm.title}
                     onChange={(ev) => setCreateForm((c) => ({ ...c, title: ev.target.value }))}
-                    className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-500 focus:outline-none"
+                    className="mt-1 block w-full rounded-md border border-brand-sage px-3 py-2 text-brand-brown focus:border-brand-brown focus:outline-none"
                   />
                 </label>
                 <label className="block">
-                  <span className="text-sm font-medium text-slate-700">Venue</span>
+                  <span className="text-sm font-medium text-brand-brown/80">Venue</span>
                   <input
                     value={createForm.venue}
                     onChange={(ev) => setCreateForm((c) => ({ ...c, venue: ev.target.value }))}
-                    className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-500 focus:outline-none"
+                    className="mt-1 block w-full rounded-md border border-brand-sage px-3 py-2 text-brand-brown focus:border-brand-brown focus:outline-none"
                   />
                 </label>
                 <label className="block">
-                  <span className="text-sm font-medium text-slate-700">Location</span>
+                  <span className="text-sm font-medium text-brand-brown/80">Location</span>
                   <input
                     value={createForm.location}
                     onChange={(ev) => setCreateForm((c) => ({ ...c, location: ev.target.value }))}
-                    className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-500 focus:outline-none"
+                    className="mt-1 block w-full rounded-md border border-brand-sage px-3 py-2 text-brand-brown focus:border-brand-brown focus:outline-none"
                   />
                 </label>
               </div>
 
               <label className="block">
-                <span className="text-sm font-medium text-slate-700">Description</span>
+                <span className="text-sm font-medium text-brand-brown/80">Description</span>
                 <textarea
                   value={createForm.description}
                   onChange={(ev) => setCreateForm((c) => ({ ...c, description: ev.target.value }))}
-                  className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-500 focus:outline-none"
+                  className="mt-1 block w-full rounded-md border border-brand-sage px-3 py-2 text-brand-brown focus:border-brand-brown focus:outline-none"
                   rows={4}
                 />
               </label>
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <label className="block">
-                  <span className="text-sm font-medium text-slate-700">Start Date</span>
+                  <span className="text-sm font-medium text-brand-brown/80">Start Date</span>
                   <input
                     type="datetime-local"
                     value={createForm.startDateTime}
@@ -657,37 +657,37 @@ export default function AdminDashboardPage() {
                         return next;
                       });
                     }}
-                    className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-500 focus:outline-none"
+                    className="mt-1 block w-full rounded-md border border-brand-sage px-3 py-2 text-brand-brown focus:border-brand-brown focus:outline-none"
                   />
                 </label>
                 <label className="block">
-                  <span className="text-sm font-medium text-slate-700">End Date</span>
+                  <span className="text-sm font-medium text-brand-brown/80">End Date</span>
                   <input
                     type="datetime-local"
                     value={createForm.endDateTime}
                     onChange={(ev) => setCreateForm((c) => ({ ...c, endDateTime: ev.target.value }))}
-                    className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-500 focus:outline-none"
+                    className="mt-1 block w-full rounded-md border border-brand-sage px-3 py-2 text-brand-brown focus:border-brand-brown focus:outline-none"
                   />
                 </label>
               </div>
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <label className="block">
-                  <span className="text-sm font-medium text-slate-700">Capacity</span>
+                  <span className="text-sm font-medium text-brand-brown/80">Capacity</span>
                   <input
                     type="number"
                     min={1}
                     value={createForm.employerCapacity}
                     onChange={(ev) => setCreateForm((c) => ({ ...c, employerCapacity: ev.target.value }))}
-                    className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-500 focus:outline-none"
+                    className="mt-1 block w-full rounded-md border border-brand-sage px-3 py-2 text-brand-brown focus:border-brand-brown focus:outline-none"
                   />
                 </label>
                 <label className="block">
-                  <span className="text-sm font-medium text-slate-700">Status</span>
+                  <span className="text-sm font-medium text-brand-brown/80">Status</span>
                   <select
                     value={createForm.status}
                     onChange={(ev) => setCreateForm((c) => ({ ...c, status: ev.target.value }))}
-                    className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-500 focus:outline-none"
+                    className="mt-1 block w-full rounded-md border border-brand-sage px-3 py-2 text-brand-brown focus:border-brand-brown focus:outline-none"
                   >
                     {Object.values(EVENT_STATUS)
                       .filter((s) => s !== EVENT_STATUS.FULL && s !== EVENT_STATUS.COMPLETED)
@@ -706,14 +706,14 @@ export default function AdminDashboardPage() {
                 <button
                   type="submit"
                   disabled={creating}
-                  className="rounded-md bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60"
+                  className="rounded-md bg-brand-brown px-4 py-2 text-sm font-semibold text-brand-cream hover:bg-brand-browndark disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {creating ? "Creating..." : "Create Event"}
                 </button>
                 <button
                   type="button"
                   onClick={() => setShowCreateModal(false)}
-                  className="rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-slate-50"
+                  className="rounded-md border border-brand-sage bg-white px-4 py-2 text-sm font-semibold text-brand-brown hover:bg-brand-cream"
                 >
                   Cancel
                 </button>
@@ -729,103 +729,103 @@ export default function AdminDashboardPage() {
         </div>
       ) : null}
       {editingEventId ? (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 px-4 py-6">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-brand-brown/50 px-4 py-6">
           <div className="w-full max-w-3xl overflow-y-auto rounded-2xl bg-white p-6 shadow-xl">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-2xl font-semibold text-slate-900">Edit Event</h2>
-                <p className="text-sm text-slate-600">Update event details and submit to save.</p>
+                <h2 className="font-heading text-2xl font-semibold text-brand-brown">Edit Event</h2>
+                <p className="text-sm text-brand-brown/70">Update event details and submit to save.</p>
               </div>
               <button
                 type="button"
                 onClick={closeEditModal}
-                className="rounded-md border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-900 hover:bg-slate-50"
+                className="rounded-md border border-brand-sage bg-white px-3 py-2 text-sm font-medium text-brand-brown hover:bg-brand-cream"
               >
                 Close
               </button>
             </div>
 
             {editLoading ? (
-              <div className="mt-6 text-slate-700">Loading event details...</div>
+              <div className="mt-6 text-brand-brown/70">Loading event details...</div>
             ) : editError ? (
               <div className="mt-6 rounded-xl border border-red-200 bg-red-50 p-4 text-red-900">{editError}</div>
             ) : editingEvent ? (
               <form className="mt-6 space-y-4" onSubmit={handleEditSave}>
                 <div className="grid gap-4 sm:grid-cols-2">
                   <label className="block">
-                    <span className="text-sm font-medium text-slate-700">Title</span>
+                    <span className="text-sm font-medium text-brand-brown/80">Title</span>
                     <input
                       value={editForm.title}
                       onChange={(event) => setEditForm((current) => ({ ...current, title: event.target.value }))}
-                      className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-500 focus:outline-none"
+                      className="mt-1 block w-full rounded-md border border-brand-sage px-3 py-2 text-brand-brown focus:border-brand-brown focus:outline-none"
                     />
                   </label>
                   <label className="block">
-                    <span className="text-sm font-medium text-slate-700">Venue</span>
+                    <span className="text-sm font-medium text-brand-brown/80">Venue</span>
                     <input
                       value={editForm.venue}
                       onChange={(event) => setEditForm((current) => ({ ...current, venue: event.target.value }))}
-                      className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-500 focus:outline-none"
+                      className="mt-1 block w-full rounded-md border border-brand-sage px-3 py-2 text-brand-brown focus:border-brand-brown focus:outline-none"
                     />
                   </label>
                   <label className="block">
-                    <span className="text-sm font-medium text-slate-700">Location</span>
+                    <span className="text-sm font-medium text-brand-brown/80">Location</span>
                     <input
                       value={editForm.location}
                       onChange={(event) => setEditForm((current) => ({ ...current, location: event.target.value }))}
-                      className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-500 focus:outline-none"
+                      className="mt-1 block w-full rounded-md border border-brand-sage px-3 py-2 text-brand-brown focus:border-brand-brown focus:outline-none"
                     />
                   </label>
                 </div>
 
                 <label className="block">
-                  <span className="text-sm font-medium text-slate-700">Description</span>
+                  <span className="text-sm font-medium text-brand-brown/80">Description</span>
                   <textarea
                     value={editForm.description}
                     onChange={(event) => setEditForm((current) => ({ ...current, description: event.target.value }))}
-                    className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-500 focus:outline-none"
+                    className="mt-1 block w-full rounded-md border border-brand-sage px-3 py-2 text-brand-brown focus:border-brand-brown focus:outline-none"
                     rows={4}
                   />
                 </label>
 
                 <div className="grid gap-4 sm:grid-cols-2">
                   <label className="block">
-                    <span className="text-sm font-medium text-slate-700">Start Date</span>
+                    <span className="text-sm font-medium text-brand-brown/80">Start Date</span>
                     <input
                       type="datetime-local"
                       value={editForm.startDateTime}
                       onChange={(event) => setEditForm((current) => ({ ...current, startDateTime: event.target.value }))}
-                      className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-500 focus:outline-none"
+                      className="mt-1 block w-full rounded-md border border-brand-sage px-3 py-2 text-brand-brown focus:border-brand-brown focus:outline-none"
                     />
                   </label>
                   <label className="block">
-                    <span className="text-sm font-medium text-slate-700">End Date</span>
+                    <span className="text-sm font-medium text-brand-brown/80">End Date</span>
                     <input
                       type="datetime-local"
                       value={editForm.endDateTime}
                       onChange={(event) => setEditForm((current) => ({ ...current, endDateTime: event.target.value }))}
-                      className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-500 focus:outline-none"
+                      className="mt-1 block w-full rounded-md border border-brand-sage px-3 py-2 text-brand-brown focus:border-brand-brown focus:outline-none"
                     />
                   </label>
                 </div>
 
                 <div className="grid gap-4 sm:grid-cols-2">
                   <label className="block">
-                      <span className="text-sm font-medium text-slate-700">Capacity</span>
+                      <span className="text-sm font-medium text-brand-brown/80">Capacity</span>
                       <input
                         type="number"
                         min={1}
                         value={editForm.employerCapacity}
                         onChange={(event) => setEditForm((current) => ({ ...current, employerCapacity: event.target.value }))}
-                        className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-500 focus:outline-none"
+                        className="mt-1 block w-full rounded-md border border-brand-sage px-3 py-2 text-brand-brown focus:border-brand-brown focus:outline-none"
                       />
                     </label>
                     <label className="block">
-                      <span className="text-sm font-medium text-slate-700">Status</span>
+                      <span className="text-sm font-medium text-brand-brown/80">Status</span>
                       <select
                         value={editForm.status}
                         onChange={(event) => handleEditStatusChange(event.target.value)}
-                        className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 focus:border-slate-500 focus:outline-none"
+                        className="mt-1 block w-full rounded-md border border-brand-sage px-3 py-2 text-brand-brown focus:border-brand-brown focus:outline-none"
                       >
                         {editForm.status === EVENT_STATUS.FULL ? (
                           <option value={EVENT_STATUS.FULL} disabled>
@@ -849,14 +849,14 @@ export default function AdminDashboardPage() {
                   <button
                     type="submit"
                     disabled={saving}
-                    className="rounded-md bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60"
+                    className="rounded-md bg-brand-brown px-4 py-2 text-sm font-semibold text-brand-cream hover:bg-brand-browndark disabled:cursor-not-allowed disabled:opacity-60"
                   >
                     {saving ? "Saving..." : "Save Changes"}
                   </button>
                   <button
                     type="button"
                     onClick={closeEditModal}
-                    className="rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-slate-50"
+                    className="rounded-md border border-brand-sage bg-white px-4 py-2 text-sm font-semibold text-brand-brown hover:bg-brand-cream"
                   >
                     Cancel
                   </button>

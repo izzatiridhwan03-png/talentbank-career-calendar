@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "../../../../lib/prisma";
 import { getEventDisplayStatus, validateEventPayload, buildOverlapFilter } from "../../../../lib/event-api";
+import { EVENT_STATUS } from "../../../../lib/constants";
 
 export async function GET(
   _request: Request,
@@ -51,10 +52,11 @@ export async function PUT(
 
   const data = result.data as Record<string, unknown>;
 
+  const currentEmployerCount = await prisma.employerRegistration.count({
+    where: { eventId: id },
+  });
+
   if (data.employerCapacity !== undefined) {
-    const currentEmployerCount = await prisma.employerRegistration.count({
-      where: { eventId: id },
-    });
     if (Number(data.employerCapacity) < currentEmployerCount) {
       return NextResponse.json(
         {
@@ -89,6 +91,19 @@ export async function PUT(
     }
   }
 
+  const effectiveCapacity =
+    data.employerCapacity !== undefined
+      ? Number(data.employerCapacity)
+      : event.employerCapacity;
+
+  let effectiveStatus = (data.status as string | undefined) ?? event.status;
+  if (effectiveStatus !== EVENT_STATUS.CANCELLED) {
+    effectiveStatus =
+      currentEmployerCount >= effectiveCapacity
+        ? EVENT_STATUS.FULL
+        : EVENT_STATUS.SCHEDULED;
+  }
+
   const updated = await prisma.event.update({
     where: { id },
     data: {
@@ -102,7 +117,7 @@ export async function PUT(
         data.employerCapacity !== undefined
           ? Number(data.employerCapacity)
           : undefined,
-      status: data.status as string | undefined,
+      status: effectiveStatus,
     },
   });
 
