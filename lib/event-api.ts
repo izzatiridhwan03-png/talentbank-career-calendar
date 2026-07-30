@@ -46,11 +46,25 @@ function validateStatus(value: unknown): string {
     throw new Error("status must be a string");
   }
 
-  if (!Object.values(EVENT_STATUS).includes(value as typeof EVENT_STATUS[keyof typeof EVENT_STATUS])) {
+  const normalized = value.toUpperCase();
+
+  if (!Object.values(EVENT_STATUS).includes(normalized as typeof EVENT_STATUS[keyof typeof EVENT_STATUS])) {
     throw new Error(`status must be one of: ${Object.values(EVENT_STATUS).join(", ")}`);
   }
 
-  return value;
+  return normalized;
+}
+
+export function isEventCompleted(endDateTime: Date | string) {
+  return new Date() > new Date(endDateTime);
+}
+
+export function getEventDisplayStatus(event: { status: string; endDateTime: Date }) {
+  if (event.status === EVENT_STATUS.CANCELLED) {
+    return EVENT_STATUS.CANCELLED;
+  }
+
+  return isEventCompleted(event.endDateTime) ? "COMPLETED" : event.status;
 }
 
 function validatePlainString(value: unknown, fieldName: string) {
@@ -221,13 +235,11 @@ export function validateEventPayload(
 }
 
 export function buildOverlapFilter(
-  venue: string,
   startDateTime: string,
   endDateTime: string,
   excludeEventId?: string
 ) {
   return {
-    venue,
     AND: [
       { startDateTime: { lt: endDateTime } },
       { endDateTime: { gt: startDateTime } },

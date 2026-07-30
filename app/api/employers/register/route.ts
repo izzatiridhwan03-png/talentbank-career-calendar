@@ -55,41 +55,6 @@ export async function POST(request: Request) {
     );
   }
 
-  const registration = await prisma.$transaction(async (tx) => {
-    const currentEmployerCount = await tx.employerRegistration.count({
-      where: { eventId },
-    });
-
-    if (currentEmployerCount >= event.employerCapacity) {
-      throw new Error("Employer registration capacity has been reached for this event.");
-    }
-
-    const created = await tx.employerRegistration.create({
-      data: {
-        eventId,
-        companyName,
-        contactPerson,
-        email,
-      },
-    });
-
-    if (currentEmployerCount + 1 >= event.employerCapacity) {
-      await tx.event.update({
-        where: { id: eventId },
-        data: { status: EVENT_STATUS.FULL },
-      });
-    }
-
-    return created;
-  });
-
-  if (existingRegistration) {
-    return NextResponse.json(
-      { message: "This email is already registered for the event." },
-      { status: 409 }
-    );
-  }
-
   let registration;
 
   try {

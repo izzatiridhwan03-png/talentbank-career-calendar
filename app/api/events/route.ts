@@ -1,13 +1,19 @@
 import { NextResponse } from "next/server";
 import { prisma } from "../../../lib/prisma";
 import { EVENT_STATUS } from "../../../lib/constants";
-import { validateEventPayload, buildOverlapFilter } from "../../../lib/event-api";
+import { getEventDisplayStatus, validateEventPayload, buildOverlapFilter } from "../../../lib/event-api";
 
 export async function GET() {
   const events = await prisma.event.findMany({
     orderBy: { startDateTime: "asc" },
   });
-  return NextResponse.json(events);
+
+  const response = events.map((event) => ({
+    ...event,
+    displayStatus: getEventDisplayStatus(event),
+  }));
+
+  return NextResponse.json(response);
 }
 
 export async function POST(request: Request) {
@@ -22,7 +28,6 @@ export async function POST(request: Request) {
 
   const overlap = await prisma.event.findFirst({
     where: buildOverlapFilter(
-      data.venue as string,
       new Date(data.startDateTime as string).toISOString(),
       new Date(data.endDateTime as string).toISOString()
     ),
@@ -30,7 +35,10 @@ export async function POST(request: Request) {
 
   if (overlap) {
     return NextResponse.json(
-      { message: "Event timing conflicts with an existing event at the same venue." },
+      {
+        message:
+          "Another event is already scheduled during the selected period. Talentbank only allows one active event at a time.",
+      },
       { status: 409 }
     );
   }
