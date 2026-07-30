@@ -1,6 +1,7 @@
 export const EVENT_STATUS = {
   SCHEDULED: "SCHEDULED",
   FULL: "FULL",
+  COMPLETED: "COMPLETED",
   CANCELLED: "CANCELLED",
 } as const;
 
